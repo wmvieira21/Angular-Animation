@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <button (click)="onAnimation()">Animation</button>
+    <button (click)="onShrink()">Shrink</button>
+  </div>
+  <hr>
+  <div class="row">
+    <div [@divState]="state" style="width: 100px; height: 100px;">
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div [@wildState]="wildState" style="width: 100px; height: 100px;">
+    </div>
+  </div>
+</div>
