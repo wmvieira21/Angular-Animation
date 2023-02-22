@@ -1,4 +1,4 @@
-import { trigger, state, transition, style, animate, animation, keyframes } from '@angular/animations';
+import { trigger, state, transition, style, animate, animation, keyframes, group } from '@angular/animations';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { delay } from 'rxjs';
 
@@ -55,6 +55,7 @@ import { delay } from 'rxjs';
         transform: 'translateX(0)'
       })),
       transition('void =>*', [
+        //initial style 
         style({
           opacity: 0,
           transform: 'translateX(-150px)'
@@ -69,24 +70,74 @@ import { delay } from 'rxjs';
       )
     ]),
 
+    //transition for steps (keyframes) offsets between 0 and 1
     trigger('list2', [
       state('in', style({
         opacity: 1,
         transform: 'translateX(0)'
       })),
-      transition('void =>*', [
-        style({
-          opacity: 0,
-          transform: 'translateX(-150px)'
-        }),
-        animate(1000)
+
+      transition('void => *', [
+        animate(1000, keyframes([
+          style({
+            opacity: 0,
+            transform: 'translateX(-100px)',
+            offset: 0 //wich time in this 1000ms we shoud be in this state;
+          }),
+          style({
+            opacity: 0.5,
+            transform: 'translateX(-50px)',
+            offset: 0.3
+          }),
+          style({
+            opacity: 1,
+            transform: 'translateX(-20px)',
+            offset: 0.8
+          }),
+          style({
+            opacity: 1,
+            transform: 'translateX(0px)',
+            offset: 1
+          }),
+        ]))
       ]),
-      transition('* => void', animate(1000,
+
+      /*transition('* => void', [
         style({
-          opacity: 0,
-          transform: 'translateX(300px)'
-        }))
-      )
+          color: 'red',
+          backgroundColor: 'blue'
+        }),
+        animate(5000, keyframes([
+          style({
+            opacity: 1,
+            transform: 'translateX(100px)',
+            offset: 0.3
+          }),
+          style({
+            opacity: 0.5,
+            transform: 'translateX(200px)',
+            offset: 0.6
+          }),
+          style({
+            opacity: 0,
+            transform: 'translateX(300px)',
+            offset: 0.9
+          })
+        ]))
+      ]),*/
+
+      //group apply multiple animation at the same time.
+      transition('* => void', [
+        group([
+          animate(300, style({
+            color: 'red'
+          })),
+          animate(800, style({
+            opacity: 0,
+            transform: 'translateX(300px)',
+          }))
+        ])
+      ])
     ])
   ]
 })
@@ -111,5 +162,12 @@ export class AppComponent {
   }
   deleteItem(index: number) {
     this.list.splice(index, 1);
+  }
+
+  animationStart(event: any) {
+    console.log(event);
+  }
+  animationEnded(event: any) {
+    console.log(event);
   }
 }

@@ -1,12 +1,15 @@
 <div class="container">
   <div class="row">
-    <button class="btn btn-primary" (click)="onAnimation()">Animation</button>
-    <button class="btn btn-primary" (click)="onShrink()">Shrink</button>
+    <div class="col-sm-6">
+      <button class="btn btn-primary" (click)="onAnimation()">Animation</button>
+      <button class="btn btn-primary" (click)="onShrink()">Shrink</button>
+    </div>
   </div>
 
   <hr>
   <div class="row">
-    <div [@divState]="state" style="width: 100px; height: 100px;">
+    <div [@divState]="state" (@divState.start)="animationStart($event)" (@divState.done)="animationEnded($event)"
+      style="width: 100px; height: 100px;">
     </div>
   </div>
   <br>
@@ -33,7 +36,8 @@
         *ngFor="let item of list; let i = index">{{item}}</li>
     </ul>
   </div>
-  <hr><hr>
+  <hr>
+  <hr>
   <div class="row">
     <ul class="list-group">
       <li [@list2] class="list-group-item" (click)="deleteItem(i)" style="cursor: pointer;"
