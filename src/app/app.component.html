@@ -1,16 +1,43 @@
 <div class="container">
   <div class="row">
-    <button (click)="onAnimation()">Animation</button>
-    <button (click)="onShrink()">Shrink</button>
+    <button class="btn btn-primary" (click)="onAnimation()">Animation</button>
+    <button class="btn btn-primary" (click)="onShrink()">Shrink</button>
   </div>
+
   <hr>
   <div class="row">
     <div [@divState]="state" style="width: 100px; height: 100px;">
     </div>
   </div>
   <br>
+
   <div class="row">
     <div [@wildState]="wildState" style="width: 100px; height: 100px;">
     </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <input type="text" #ingredient class="form-control">
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-primary" (click)="onAddIngredient()">Add</button>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <ul class="list-group">
+      <li [@list1] class="list-group-item" (click)="deleteItem(i)" style="cursor: pointer;"
+        *ngFor="let item of list; let i = index">{{item}}</li>
+    </ul>
+  </div>
+  <hr><hr>
+  <div class="row">
+    <ul class="list-group">
+      <li [@list2] class="list-group-item" (click)="deleteItem(i)" style="cursor: pointer;"
+        *ngFor="let item of list; let i = index">{{item}}</li>
+    </ul>
   </div>
 </div>
